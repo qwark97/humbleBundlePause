@@ -3,6 +3,7 @@ package main
 import (
 	"context"
 	"encoding/json"
+	"fmt"
 	"log"
 	"net/http"
 	"os"
@@ -12,13 +13,14 @@ import (
 
 var (
 	PYTHON string
+	PORT   string
 )
 
 func main() {
 	loadEnvs()
 	http.HandleFunc("/pause", scriptExecutor)
-	log.Println("start at: 0.0.0.0:8888")
-	log.Fatal(http.ListenAndServe(":8888", nil))
+	log.Println(fmt.Sprintf("start at: 127.0.0.1:%s", PORT))
+	log.Fatal(http.ListenAndServe(fmt.Sprintf(":%s", PORT), nil))
 }
 
 func scriptExecutor(w http.ResponseWriter, _ *http.Request) {
@@ -49,7 +51,11 @@ func scriptExecutor(w http.ResponseWriter, _ *http.Request) {
 func loadEnvs() {
 	PYTHON = os.Getenv("HBP_PYTHON_PATH")
 	if PYTHON == "" {
-		log.Panicln("Env PYTHON is needed")
+		log.Panicln("Env HBP_PYTHON_PATH is needed")
+	}
+	PORT = os.Getenv("HBP_PORT")
+	if PYTHON == "" {
+		log.Panicln("Env HBP_PORT is needed")
 	}
 
 	// below are being used by ran subprocess so must be present
