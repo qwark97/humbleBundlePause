@@ -24,7 +24,7 @@ def notify_about_error(msg: str):
 
 def run_browser() -> webdriver.Chrome:
     o = webdriver.ChromeOptions()
-    o.headless = False
+    o.headless = True
     o.add_argument(f"user-data-dir={BROWSER_PROFILE_PATH}")
     o.add_argument(f"user-agent={USER_AGENT}")
     driver = webdriver.Chrome(
