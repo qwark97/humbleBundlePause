@@ -39,21 +39,25 @@ def pause_subscription(driver: webdriver.Chrome) -> bool:
     try:
         # load page
         driver.get(HUMBLE_BUNDLE_ENTRYPOINT)
+        print('loaded main URL')
 
         # click pause button
         WebDriverWait(driver, 10).until(
             expected_conditions.element_to_be_clickable(
                 (By.XPATH, "//a[contains(text(), 'Pause my membership')]"))).click()
+        print('clicked first pause button')
 
         # click another pause button
         WebDriverWait(driver, 10).until(
             expected_conditions.element_to_be_clickable(
                 (By.XPATH, "//span[contains(text(), 'Pause my membership')]"))).click()
+        print('clicked second pause button')
 
         # confirm pause
         WebDriverWait(driver, 10).until(
             expected_conditions.presence_of_element_located(
                 (By.XPATH, "//h1[contains(text(), 'Enjoy the month long break!')]")))
+        print('confirm pausing subscription')
 
     except Exception as ex:
         notify_about_error(str(ex))
