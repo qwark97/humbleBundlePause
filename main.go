@@ -54,7 +54,7 @@ func loadEnvs() {
 		log.Panicln("Env HBP_PYTHON_PATH is needed")
 	}
 	PORT = os.Getenv("HBP_PORT")
-	if PYTHON == "" {
+	if PORT == "" {
 		log.Panicln("Env HBP_PORT is needed")
 	}
 
